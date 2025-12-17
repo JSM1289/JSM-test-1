@@ -1,0 +1,18 @@
+name: Get Jira Issue Details
+
+on:
+  workflow_dispatch:
+
+jobs:
+  get-jira-issue:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Fetch Jira issue ITS-12277
+        run: |
+          AUTH=$(echo -n "${{ secrets.JIRA_EMAIL }}:${{ secrets.JIRA_API_TOKEN }}" | base64)
+
+          curl -X GET \
+            -H "Authorization: Basic $AUTH" \
+            -H "Accept: application/json" \
+            --url "${{ secrets.JIRA_BASE_URL }}/rest/api/3/issue/ITS-12277"
